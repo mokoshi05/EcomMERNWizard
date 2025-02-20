@@ -3,19 +3,21 @@ import "./newProduct.css";
 import { useSelector, useDispatch } from "react-redux";
 import { clearErrors, createProduct } from "../../actions/productAction";
 import { useAlert } from "react-alert";
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 import MetaData from "../layout/MetaData";
-import AccountTreeIcon from "@material-ui/icons/AccountTree";
-import DescriptionIcon from "@material-ui/icons/Description";
-import StorageIcon from "@material-ui/icons/Storage";
-import SpellcheckIcon from "@material-ui/icons/Spellcheck";
-import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
+import DescriptionIcon from "@mui/icons-material/Description";
+import StorageIcon from "@mui/icons-material/Storage";
+import SpellcheckIcon from "@mui/icons-material/Spellcheck";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import SideBar from "./Sidebar";
 import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
+import { useNavigate } from "react-router-dom";
 
 const NewProduct = ({ history }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
+  const navigate = useNavigate();
 
   const { loading, error, success } = useSelector((state) => state.newProduct);
 
@@ -45,10 +47,10 @@ const NewProduct = ({ history }) => {
 
     if (success) {
       alert.success("Product Created Successfully");
-      history.push("/admin/dashboard");
+      navigate("/admin/dashboard");
       dispatch({ type: NEW_PRODUCT_RESET });
     }
-  }, [dispatch, alert, error, history, success]);
+  }, [dispatch, alert, error, history, success, navigate]);
 
   const createProductSubmitHandler = (e) => {
     e.preventDefault();
